@@ -1,5 +1,4 @@
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.asm.Advice;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -20,6 +19,8 @@ public class Automation {
     String XPATHPESQUISARGOOGLE = "//*[@id=\"APjFqb\"]";
     String XPATHBUSCARCONTATOWPP = "//*[@id=\"side\"]/div[1]/div/div/div[2]/div/div[1]/p";
     String XPATHBUSCARCONTATOMON = "//*[@id=\"pane-side\"]/div[1]/div/div/div[6]/div/div/div/div[1]/div/div/img";
+    String XPATHBUSCARCONTATOMON1 = "//*[@id=\"pane-side\"]/div[1]/div/div/div[7]/div/div/div/div[2]/div[1]/div[1]/span/span";
+    String XPATHBUSCARCONTATOMON2 = "/html/body/div[1]/div/div/div[4]/div/div[2]/div[1]/div/div/div[7]/div/div/div/div[2]/div[1]/div[1]/span";
     String XPATHCAIXADETEXTO = "//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]/p";
     String XPATHCAIXADETEXTOENVIAR = "//*[@id=\"app\"]/div/div/div[3]/div[2]/span/div/span/div/div/div[2]/div/div[1]/div[3]/div/div/div[2]/div[1]/div[1]/p";
 
@@ -108,8 +109,18 @@ public class Automation {
 
         navigator.findElement(By.xpath(XPATHBUSCARCONTATOWPP)).sendKeys("monkeys");
         Thread.sleep(2000);
-        navigator.findElement(By.xpath(XPATHBUSCARCONTATOMON)).click();
-        Thread.sleep(1000);
+
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(1460, 360);
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            Thread.sleep(1000);
+
+        } catch (AWTException e) {
+
+        }
+
         navigator.findElement(By.xpath(XPATHCAIXADETEXTO)).click();
 
         Actions actions = new Actions(navigator);
@@ -120,7 +131,7 @@ public class Automation {
         Thread.sleep(500);
 
         navigator.findElement(By.xpath(XPATHCAIXADETEXTOENVIAR)).sendKeys("Faltam " + missingDays +
-                " dias para o casamento do aquino, Gabri...seu tempo está se esgotando...", Keys.ENTER);
+                " dias para o casamento do aquino, Gabri...seu tempo está se esgotando...");
 
     }
 
