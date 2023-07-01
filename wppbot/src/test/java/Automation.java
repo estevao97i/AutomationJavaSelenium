@@ -7,6 +7,8 @@ import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -26,8 +28,8 @@ public class Automation {
 
     private long coordenateXY(LocalDate date) {
         var currentDay = LocalDate.now();
-        Duration diff = Duration.between(currentDay.atStartOfDay(), date.atStartOfDay());
-//        System.out.println(diff.toDays());
+        Duration diff = Duration.between( date.atStartOfDay(), currentDay.atStartOfDay());
+        System.out.println(diff.toDays());
         if (diff.toDays() > 6) {
             coordenateXY(date.plusDays(7));
         }
@@ -60,7 +62,7 @@ public class Automation {
 
             // These coordinates are screen coordinates
             int xCoord = 1470;
-            int yCoord = 420;
+            int yCoord = 400;
 
             var firstDay = LocalDate.of(2023, 6, 29);
             var days = coordenateXY(firstDay);
@@ -117,9 +119,14 @@ public class Automation {
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
             Thread.sleep(1000);
 
+            robot.mouseMove(1600, 700);
+
         } catch (AWTException e) {
 
         }
+
+        new WebDriverWait(navigator, Duration.ofSeconds(3)).until(driver ->
+                navigator.findElement(By.xpath(XPATHCAIXADETEXTO)));
 
         navigator.findElement(By.xpath(XPATHCAIXADETEXTO)).click();
 
